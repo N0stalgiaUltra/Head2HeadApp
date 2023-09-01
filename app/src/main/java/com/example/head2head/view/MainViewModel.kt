@@ -4,19 +4,31 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.head2head.data.local.dao.TeamDao
 import com.example.head2head.data.remote.FootballAPI
+import com.example.head2head.data.remote.dto.TeamDto
 import com.example.head2head.data.remote.response.TeamResponse
-import com.example.head2head.domain.TeamCard
+import com.example.head2head.domain.TeamLocalDataSource
+import com.example.head2head.domain.mapper.TeamCard
+import com.example.head2head.domain.mapper.TeamItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(val api: FootballAPI): ViewModel() {
+class MainViewModel(
+    val api: FootballAPI,
+    val local: TeamLocalDataSource
+): ViewModel() {
+
+    private val _teamList = MutableLiveData<List<TeamDto>>()
 
     private val _teamCardList = MutableLiveData<List<TeamCard>>()
     val teamCardList: LiveData<List<TeamCard>> get() = _teamCardList
+
+    private val _teamItemList = MutableLiveData<List<TeamItem>>()
+    val teamItemList: LiveData<List<TeamItem>> get() = _teamItemList
 
     suspend fun getAllTeams() = withContext(Dispatchers.IO){
         val call: Call<TeamResponse> = api.getTeams()
@@ -26,12 +38,16 @@ class MainViewModel(val api: FootballAPI): ViewModel() {
                     call: Call<TeamResponse>,
                     response: Response<TeamResponse>
                 ) {
-                    Log.d("response", "Successful")
-                    Log.d("response", response.body().toString())
-                    _teamCardList.value = response.body()?.teamResponse?.map {
-                        it.team.toTeamCard()
-                    }
-
+                    val team = response.body()
+                    if(team != null)
+                        local.insert(team.teamResponse.map { it.team })
+//                    _teamCardList.value = response.body()?.teamResponse?.map {
+//                        it.team.toTeamCard()
+//                    }
+//                    _teamItemList.value = response.body()?.teamResponse?.map {
+//                        it.team.toTeamItem()
+//                    }
+                    Log.d("response", "Success")
 
                 }
 

@@ -1,7 +1,7 @@
 package com.example.head2head.data.remote.dto
 
-import com.example.head2head.domain.TeamCard
-import com.example.head2head.domain.TeamItem
+import com.example.head2head.domain.mapper.TeamCard
+import com.example.head2head.domain.mapper.TeamItem
 
 data class TeamDto(
     val id: Int,
@@ -9,14 +9,14 @@ data class TeamDto(
     val code: String,
     val logo: String
 ){
-    fun toTeamCard(): TeamCard{
+    fun toTeamCard(): TeamCard {
         return TeamCard(
             teamImage = logo,
             teamAbvr = code
         )
     }
 
-    fun toTeamItem(): TeamItem{
+    fun toTeamItem(): TeamItem {
         return TeamItem(
             teamImage = logo,
             teamName = name

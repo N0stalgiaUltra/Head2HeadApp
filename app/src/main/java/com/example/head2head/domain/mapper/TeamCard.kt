@@ -1,4 +1,4 @@
-package com.example.head2head.domain
+package com.example.head2head.domain.mapper
 
 //Mapper
 data class TeamCard(

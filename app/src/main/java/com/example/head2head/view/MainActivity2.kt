@@ -17,7 +17,6 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {

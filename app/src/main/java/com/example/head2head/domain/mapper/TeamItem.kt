@@ -1,4 +1,4 @@
-package com.example.head2head.domain
+package com.example.head2head.domain.mapper
 
 data class TeamItem(
     val teamImage: String,

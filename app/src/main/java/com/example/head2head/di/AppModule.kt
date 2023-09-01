@@ -1,11 +1,17 @@
 package com.example.head2head.di
 
+import androidx.room.Room
+import com.example.head2head.data.local.AppDatabase
+import com.example.head2head.data.local.TeamLocalDataSourceImp
+import com.example.head2head.data.local.dao.TeamDao
 import com.example.head2head.data.remote.FootballAPI
+import com.example.head2head.domain.TeamLocalDataSource
 import com.example.head2head.view.MainViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -60,11 +66,37 @@ val apiModule = module{
     }
 }
 
+val databaseModule = module{
+    single {
+        Room.databaseBuilder(context = androidContext(),
+        klass = AppDatabase::class.java,
+        name = AppDatabase.DATABASE_NAME)
+            .build()
+    }
+
+    single {
+        get<AppDatabase>().teamDao()
+    }
+}
+
+val localModule = module{
+    single<TeamLocalDataSource> {
+        TeamLocalDataSourceImp(get())
+    }
+}
+
+val remoteModule = module{
+
+}
+
 val viewModelModule = module{
     viewModel {
         MainViewModel(
+            get(),
             get()
         )
     }
 }
+
+val repositoryModule = module{}
 /*TODO: Modulo do Repository*/
