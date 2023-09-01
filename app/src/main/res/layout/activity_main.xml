@@ -7,13 +7,21 @@
     tools:context=".view.MainActivity">
 
 
-    <TextView
+    <Spinner
+        android:id="@+id/teamSpinner1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="hello world"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".2"
+        android:spinnerMode="dropdown"
+        android:overlapAnchor="false"
+        android:dropDownVerticalOffset="50dp"
+
+
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

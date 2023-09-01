@@ -32,9 +32,9 @@ class MainViewModel(
     private val _teamItemList = MutableLiveData<List<TeamItem>>()
     val teamItemList: LiveData<List<TeamItem>> get() = _teamItemList
 
+    /*TODO: Fazer o Mapping dos dados*/
+    /*TODO: Recuperar os dados de H2H*/
     fun getTeamsLocal(){
-        /*TODO: Verifica se eu tenho itens na minha DB, se não tiver, faz req para a API */
-        /*TODO: fazer o Mapping dos dados*/
 
         local.getTeam().observeForever{
             localData ->
@@ -61,9 +61,10 @@ class MainViewModel(
                     response: Response<TeamResponse>
                 ) {
                     val team = response.body()
-                    if(team != null)
+                    if(team != null) {
                         local.insert(team.teamResponse.map { it.team })
                         _teamList.value = local.getTeam().value
+                    }
 //                    _teamCardList.value = response.body()?.teamResponse?.map {
 //                        it.team.toTeamCard()
 //                    }
