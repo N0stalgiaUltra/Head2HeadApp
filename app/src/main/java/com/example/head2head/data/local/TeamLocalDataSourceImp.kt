@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import com.example.head2head.data.local.dao.TeamDao
 import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.data.remote.dto.TeamDto
-import com.example.head2head.data.remote.response.TeamResponse
-import com.example.head2head.data.remote.response.TeamResponseItem
 import com.example.head2head.domain.TeamLocalDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,13 +14,17 @@ class TeamLocalDataSourceImp (val dao: TeamDao): TeamLocalDataSource {
 
     override fun insert(team: List<TeamDto>) {
         CoroutineScope(Dispatchers.IO).launch {
-            dao.insert(convertToLocal(team))
+            for(teamData in team){
+                val existingTeam = dao.getTeamById(teamData.id)
+                if(existingTeam == null)
+                    dao.insert(convertToLocal(team))
+            }
         }
         Log.d("db", "items inserted")
     }
 
     override fun getTeam(): LiveData<List<TeamLocal>> {
-        return dao.getTeam()
+        return dao.getTeams()
     }
 
     private fun convertToLocal(team: List<TeamDto>): List<TeamLocal>{

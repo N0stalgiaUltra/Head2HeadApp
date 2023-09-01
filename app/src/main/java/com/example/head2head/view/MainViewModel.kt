@@ -4,14 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.head2head.data.local.dao.TeamDao
+import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.data.remote.FootballAPI
-import com.example.head2head.data.remote.dto.TeamDto
 import com.example.head2head.data.remote.response.TeamResponse
 import com.example.head2head.domain.TeamLocalDataSource
 import com.example.head2head.domain.mapper.TeamCard
 import com.example.head2head.domain.mapper.TeamItem
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +23,8 @@ class MainViewModel(
     val local: TeamLocalDataSource
 ): ViewModel() {
 
-    private val _teamList = MutableLiveData<List<TeamDto>>()
+    private val _teamList = MutableLiveData<List<TeamLocal>?>()
+    val teamList: LiveData<List<TeamLocal>?> get() = _teamList
 
     private val _teamCardList = MutableLiveData<List<TeamCard>>()
     val teamCardList: LiveData<List<TeamCard>> get() = _teamCardList
@@ -30,7 +32,27 @@ class MainViewModel(
     private val _teamItemList = MutableLiveData<List<TeamItem>>()
     val teamItemList: LiveData<List<TeamItem>> get() = _teamItemList
 
-    suspend fun getAllTeams() = withContext(Dispatchers.IO){
+    fun getTeamsLocal(){
+        /*TODO: Verifica se eu tenho itens na minha DB, se não tiver, faz req para a API */
+        /*TODO: fazer o Mapping dos dados*/
+
+        local.getTeam().observeForever{
+            localData ->
+            if(localData.isNullOrEmpty()){
+                CoroutineScope(Dispatchers.IO).launch {
+                    Log.d("local", "Empty List, Trying API")
+                    getTeamsRemote()
+                }
+            }
+            else{
+                _teamList.value = localData
+                Log.d("Local", "Success")
+                Log.d("local", "${_teamList.value!!.size}")
+            }
+
+        }
+    }
+    suspend fun getTeamsRemote() = withContext(Dispatchers.IO){
         val call: Call<TeamResponse> = api.getTeams()
         call.enqueue(
             object: Callback<TeamResponse>{
@@ -41,6 +63,7 @@ class MainViewModel(
                     val team = response.body()
                     if(team != null)
                         local.insert(team.teamResponse.map { it.team })
+                        _teamList.value = local.getTeam().value
 //                    _teamCardList.value = response.body()?.teamResponse?.map {
 //                        it.team.toTeamCard()
 //                    }
