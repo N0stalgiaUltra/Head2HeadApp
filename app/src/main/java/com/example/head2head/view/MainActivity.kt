@@ -8,9 +8,11 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.map
+import com.bumptech.glide.Glide
 import com.example.head2head.R
 import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.databinding.ActivityMainBinding
+import com.example.head2head.view.dropdown.CustomDropdownItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -24,17 +26,19 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        /*TODO: Adicionar Observable para o viewModel */
 
         mainViewModel.teamList.observe(this, Observer {
             items ->
             if(items != null){
-                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items.map { it.name })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                val adapter = CustomDropdownItem(
+                    this)
+                adapter.setList(items)
                 binding.teamSpinner1.adapter = adapter
+
 
             }
         })
+
         getTeams()
     }
 
@@ -42,4 +46,9 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getTeamsLocal()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Glide.get(this).clearDiskCache()
+        Glide.get(this).clearMemory()
+    }
 }
