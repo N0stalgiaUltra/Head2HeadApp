@@ -45,4 +45,5 @@
     </string>
     <string name="spinner_placeholder">Select the team</string>
     <string name="club_icon">Club icon</string>
+    <string name="title_activity_headtohead">HeadtoheadActivity</string>
 </resources>

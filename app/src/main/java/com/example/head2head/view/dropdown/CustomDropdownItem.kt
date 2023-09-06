@@ -58,11 +58,8 @@ class CustomDropdownItem(
             itemView = inflater.inflate(R.layout.card_item, parent, false)
             val newViewHolder = ViewHolder()
 
-
-            val cardView = itemView.findViewById<CardView>(R.id.teamCardItem)
             newViewHolder.teamIcon = itemView.findViewById(R.id.viewTeamLogo)
             newViewHolder.teamName = itemView.findViewById(R.id.viewTeamName)
-            cardView.tag = position
 
             itemView.tag = newViewHolder
             newViewHolder

@@ -37,17 +37,31 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
 
+        android:background="@drawable/spinner_background"
+        android:dropDownWidth="match_parent"
+        android:dropDownVerticalOffset="50dp"
+        android:overlapAnchor="false"
+
+
+        android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teamSpinner1"
+        app:layout_constraintTop_toBottomOf="@id/teamSpinner1" />
 
-
-        android:background="@drawable/spinner_background"
-        android:spinnerMode="dropdown"
-        android:overlapAnchor="false"
-        android:dropDownVerticalOffset="50dp"
-        android:dropDownWidth="match_parent" />
+    <Button
+        android:id="@+id/buttonH2H"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
+        android:backgroundTint="@color/green"
+        android:text="Check Head to Head"
+        android:textColor="@color/dark_blue"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
