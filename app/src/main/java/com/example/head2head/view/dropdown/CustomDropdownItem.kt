@@ -8,14 +8,16 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.head2head.R
 import com.example.head2head.data.local.model.TeamLocal
+import com.example.head2head.view.ImageLoader
 
 class CustomDropdownItem(
     private val context: Context,
-): BaseAdapter() {
+): BaseAdapter(), ImageLoader {
     private var teamsList: List<TeamLocal> = emptyList()
     /*TODO: DiffUtil*/
     fun setList(teams: List<TeamLocal>){
@@ -42,7 +44,7 @@ class CustomDropdownItem(
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return teamsList[position].id.toLong()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -50,11 +52,18 @@ class CustomDropdownItem(
         var itemView = convertView
 
         viewHolder = if (itemView == null) {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            itemView = inflater.inflate(R.layout.spinner_item, parent, false)
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+                    as LayoutInflater
+
+            itemView = inflater.inflate(R.layout.card_item, parent, false)
             val newViewHolder = ViewHolder()
+
+
+            val cardView = itemView.findViewById<CardView>(R.id.teamCardItem)
             newViewHolder.teamIcon = itemView.findViewById(R.id.viewTeamLogo)
             newViewHolder.teamName = itemView.findViewById(R.id.viewTeamName)
+            cardView.tag = position
+
             itemView.tag = newViewHolder
             newViewHolder
         } else {
@@ -65,18 +74,15 @@ class CustomDropdownItem(
         return itemView!!
     }
 
+
     private fun bindData(viewHolder: ViewHolder, position: Int){
-        Log.d("Adapter", "Entrei aqui")
         val teamItem = getItem(position)
         viewHolder.teamName?.text = teamItem.name
 
-        /*TODO: Abstract into interface ? */
-        Glide.with(context)
-            .load(teamItem.logo)
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.baseline_error_24)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(viewHolder.teamIcon!!)
+        getImage(
+            context,
+            viewHolder.teamIcon,
+            teamItem.logo)
 
     }
 

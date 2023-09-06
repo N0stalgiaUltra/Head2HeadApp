@@ -44,4 +44,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="spinner_placeholder">Select the team</string>
+    <string name="club_icon">Club icon</string>
 </resources>
