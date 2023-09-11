@@ -3,10 +3,10 @@ package com.example.head2head.di
 import androidx.room.Room
 import com.example.head2head.data.local.AppDatabase
 import com.example.head2head.data.local.TeamLocalDataSourceImp
-import com.example.head2head.data.local.dao.TeamDao
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.domain.TeamLocalDataSource
-import com.example.head2head.view.MainViewModel
+import com.example.head2head.view.H2HViewModel
+import com.example.head2head.view.TeamViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -89,11 +89,19 @@ val remoteModule = module{
 
 }
 
-val viewModelModule = module{
+val teamViewModel = module{
     viewModel {
-        MainViewModel(
+        TeamViewModel(
             get(),
             get()
+        )
+    }
+}
+
+val h2hViewModel = module{
+    viewModel{
+        H2HViewModel(
+            get(), get()
         )
     }
 }

@@ -1,21 +1,12 @@
 package com.example.head2head.view
 
-import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.map
-import com.bumptech.glide.Glide
-import com.example.head2head.R
 import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.databinding.ActivityMainBinding
 import com.example.head2head.view.dropdown.CustomDropdownItem
@@ -24,7 +15,7 @@ import kotlin.reflect.KMutableProperty0
 
 class MainActivity : AppCompatActivity(), ImageLoader {
 
-    private val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel: TeamViewModel by viewModel()
     private lateinit var  binding: ActivityMainBinding
     private var id1: Long = 0
     private var id2: Long = 0
@@ -62,6 +53,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
         })
 
         getTeams()
+
     }
 
     override fun onDestroy() {
@@ -82,7 +74,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
     }
 
     private fun compareId(): Boolean{
-        return id1 == id2
+         return id1 == id2
     }
 
     private fun setOnItemSelectedListener(
@@ -104,4 +96,5 @@ class MainActivity : AppCompatActivity(), ImageLoader {
             }
         }
     }
+
 }

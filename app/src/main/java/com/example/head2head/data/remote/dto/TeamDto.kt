@@ -1,7 +1,7 @@
 package com.example.head2head.data.remote.dto
 
-import com.example.head2head.domain.mapper.TeamCard
-import com.example.head2head.domain.mapper.TeamItem
+import com.example.head2head.domain.mapper.team.TeamCard
+import com.example.head2head.domain.mapper.team.TeamItem
 
 data class TeamDto(
     val id: Int,

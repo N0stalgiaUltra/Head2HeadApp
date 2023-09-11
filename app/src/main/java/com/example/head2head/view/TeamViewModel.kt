@@ -8,8 +8,8 @@ import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.data.remote.response.TeamResponse
 import com.example.head2head.domain.TeamLocalDataSource
-import com.example.head2head.domain.mapper.TeamCard
-import com.example.head2head.domain.mapper.TeamItem
+import com.example.head2head.domain.mapper.team.TeamCard
+import com.example.head2head.domain.mapper.team.TeamItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(
+class TeamViewModel(
     val api: FootballAPI,
     val local: TeamLocalDataSource
 ): ViewModel() {
@@ -31,6 +31,7 @@ class MainViewModel(
 
     private val _teamItemList = MutableLiveData<List<TeamItem>>()
     val teamItemList: LiveData<List<TeamItem>> get() = _teamItemList
+
 
     /*TODO: Fazer o Mapping dos dados*/
     /*TODO: Recuperar os dados de H2H*/
@@ -81,4 +82,6 @@ class MainViewModel(
             }
         )
     }
+
+
 }
