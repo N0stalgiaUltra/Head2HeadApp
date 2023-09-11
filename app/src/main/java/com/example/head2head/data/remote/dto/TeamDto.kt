@@ -8,18 +8,4 @@ data class TeamDto(
     val name: String,
     val code: String,
     val logo: String
-){
-    fun toTeamCard(): TeamCard {
-        return TeamCard(
-            teamImage = logo,
-            teamAbvr = code
-        )
-    }
-
-    fun toTeamItem(): TeamItem {
-        return TeamItem(
-            teamImage = logo,
-            teamName = name
-        )
-    }
-}
+)

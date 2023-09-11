@@ -1,26 +1,23 @@
 package com.example.head2head.view.dropdown
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.head2head.R
 import com.example.head2head.data.local.model.TeamLocal
-import com.example.head2head.view.ImageLoader
+import com.example.head2head.domain.mapper.team.TeamItem
+import com.example.head2head.view.util.ImageLoader
 
 class CustomDropdownItem(
     private val context: Context,
 ): BaseAdapter(), ImageLoader {
-    private var teamsList: List<TeamLocal> = emptyList()
+    private var teamsList: List<TeamItem> = emptyList()
     /*TODO: DiffUtil*/
-    fun setList(teams: List<TeamLocal>){
+    fun setList(teams: List<TeamItem>){
         if(teamsList.isEmpty())
             this.teamsList = teams
         else
@@ -39,12 +36,12 @@ class CustomDropdownItem(
         return teamsList.size
     }
 
-    override fun getItem(position: Int): TeamLocal {
+    override fun getItem(position: Int): TeamItem {
         return teamsList[position]
     }
 
     override fun getItemId(position: Int): Long {
-        return teamsList[position].id.toLong()
+        return teamsList[position].teamId.toLong()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -74,12 +71,12 @@ class CustomDropdownItem(
 
     private fun bindData(viewHolder: ViewHolder, position: Int){
         val teamItem = getItem(position)
-        viewHolder.teamName?.text = teamItem.name
+        viewHolder.teamName?.text = teamItem.teamName
 
         getImage(
             context,
             viewHolder.teamIcon,
-            teamItem.logo)
+            teamItem.teamImage)
 
     }
 

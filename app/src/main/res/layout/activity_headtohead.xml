@@ -6,9 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".view.HeadtoheadActivity">
+    tools:context=".view.activities.HeadtoheadActivity">
 
     <FrameLayout
+        android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/yellow"
@@ -19,7 +20,27 @@
         app:layout_constraintHeight_percent="0.33"
         >
 
+        <include
+            android:id="@+id/hth_header"
+            layout="@layout/hth_header"/>
+
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.1"
+        android:layout_margin="10dp"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

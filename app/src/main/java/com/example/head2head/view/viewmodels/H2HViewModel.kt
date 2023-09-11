@@ -1,17 +1,14 @@
-package com.example.head2head.view
+package com.example.head2head.view.viewmodels
 
 import android.util.Log
-import android.view.animation.Transformation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.data.remote.dto.h2h.GoalsDto
 import com.example.head2head.data.remote.dto.h2h.H2HDto
 import com.example.head2head.data.remote.response.HTHResponse
 import com.example.head2head.domain.TeamLocalDataSource
-import com.example.head2head.domain.mapper.team.TeamItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -74,25 +71,17 @@ class H2HViewModel(
                     if(it.teams.home.winner == true)
                     {
                         count1++
-                        Log.d("List", "Bota venceu")
-
                     }
                     else {
                         count2++
-                        Log.d("List", "Bota perdeu")
-
                     }
                 } else {
                     if(it.teams.home.winner == true){
                         count2++
-                        Log.d("List", "Bta perdeu")
-
                     }
                     else
                     {
                         count1++
-                        Log.d("List", "Bota venceu")
-
                     }
                 }
 
@@ -105,3 +94,4 @@ class H2HViewModel(
     }
 
 }
+

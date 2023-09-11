@@ -1,15 +1,19 @@
-package com.example.head2head.view
+package com.example.head2head.view.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.databinding.ActivityMainBinding
+import com.example.head2head.domain.mapper.team.TeamItem
 import com.example.head2head.view.dropdown.CustomDropdownItem
+import com.example.head2head.view.util.ImageLoader
+import com.example.head2head.view.viewmodels.TeamViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.reflect.KMutableProperty0
 
@@ -31,7 +35,13 @@ class MainActivity : AppCompatActivity(), ImageLoader {
             val result = compareId()
 
             if(!result){
-                Toast.makeText(this, "IDs Accepted, call new activity", Toast.LENGTH_SHORT).show()
+                /*TODO: CHAMAR ACTIVITY DO H2H, PASSANDO DADOS PELO Intent*/
+                //Toast.makeText(this, "IDs Accepted, call new activity", Toast.LENGTH_SHORT).show()
+                val intent = Intent(applicationContext, HeadtoheadActivity::class.java)
+                intent.putExtra("teamId", id1.toInt())
+                intent.putExtra("teamId2", id2.toInt())
+                startActivity(intent)
+
             }
             else{
                 Toast.makeText(this, "You must choose different teams", Toast.LENGTH_SHORT).show()
@@ -40,7 +50,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
     }
     override fun onResume() {
         super.onResume()
-        mainViewModel.teamList.observe(this, Observer {
+        mainViewModel.teamItemList.observe(this, Observer {
             items ->
             if(items != null){
                 binding.teamSpinner1.adapter = setAdapter(items)
@@ -61,7 +71,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
         clearCache(this)
     }
 
-    private fun setAdapter(items: List<TeamLocal>) : CustomDropdownItem{
+    private fun setAdapter(items: List<TeamItem>) : CustomDropdownItem{
         val adapter = CustomDropdownItem(
             this)
         adapter.setList(items)
@@ -69,14 +79,11 @@ class MainActivity : AppCompatActivity(), ImageLoader {
     }
 
 
-    private fun getTeams(){
-        mainViewModel.getTeamsLocal()
-    }
-
-    private fun compareId(): Boolean{
-         return id1 == id2
-    }
-
+    /**
+     *  Method used to get the ID from the clicked item inside the CustomDropdown
+     *  @param spinner: the current spinner
+     *  @param idProperty: KMutableProperty used to store the ID
+     */
     private fun setOnItemSelectedListener(
         spinner: Spinner,
         idProperty: KMutableProperty0<Long>
@@ -95,6 +102,14 @@ class MainActivity : AppCompatActivity(), ImageLoader {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
         }
+    }
+
+    private fun getTeams(){
+        mainViewModel.getTeamsLocal()
+    }
+
+    private fun compareId(): Boolean{
+        return id1 == id2
     }
 
 }

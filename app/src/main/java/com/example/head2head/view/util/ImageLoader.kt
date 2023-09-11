@@ -1,4 +1,4 @@
-package com.example.head2head.view
+package com.example.head2head.view.util
 
 import android.content.Context
 import android.widget.ImageView

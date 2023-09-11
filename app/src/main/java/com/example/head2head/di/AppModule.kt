@@ -5,8 +5,8 @@ import com.example.head2head.data.local.AppDatabase
 import com.example.head2head.data.local.TeamLocalDataSourceImp
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.domain.TeamLocalDataSource
-import com.example.head2head.view.H2HViewModel
-import com.example.head2head.view.TeamViewModel
+import com.example.head2head.view.viewmodels.H2HViewModel
+import com.example.head2head.view.viewmodels.TeamViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

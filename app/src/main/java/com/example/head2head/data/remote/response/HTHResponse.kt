@@ -8,13 +8,3 @@ data class HTHResponse(
     val h2hResponse: List<H2HDto>
 )
 
-/*
-*  Response -> { fixture, league, teams, goals, score}
-*
-* fixture { date, { venue (name, city) } }
-* league { pode ser buscado separadamente e implementado no BD}
-* league (id, name, logo, flag {season, round})
-* teams { winner }
-* goals { home, away }
-*
-* */

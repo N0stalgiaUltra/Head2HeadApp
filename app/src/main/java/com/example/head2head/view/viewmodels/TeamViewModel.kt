@@ -1,9 +1,11 @@
-package com.example.head2head.view
+package com.example.head2head.view.viewmodels
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.data.remote.response.TeamResponse
@@ -33,7 +35,6 @@ class TeamViewModel(
     val teamItemList: LiveData<List<TeamItem>> get() = _teamItemList
 
 
-    /*TODO: Fazer o Mapping dos dados*/
     /*TODO: Recuperar os dados de H2H*/
     fun getTeamsLocal(){
 
@@ -47,6 +48,7 @@ class TeamViewModel(
             }
             else{
                 _teamList.value = localData
+                mapTeamItems()
                 Log.d("Local", "Success")
                 Log.d("local", "${_teamList.value!!.size}")
             }
@@ -65,22 +67,28 @@ class TeamViewModel(
                     if(team != null) {
                         local.insert(team.teamResponse.map { it.team })
                         _teamList.value = local.getTeam().value
+                        mapTeamItems()
                     }
-//                    _teamCardList.value = response.body()?.teamResponse?.map {
-//                        it.team.toTeamCard()
-//                    }
-//                    _teamItemList.value = response.body()?.teamResponse?.map {
-//                        it.team.toTeamItem()
-//                    }
                     Log.d("response", "Success")
 
                 }
 
                 override fun onFailure(call: Call<TeamResponse>, t: Throwable) {
                     Log.d("response", t.message ?: "")
+                    /*TODO: Organizar tratamento de erros*/
                 }
             }
         )
+    }
+
+
+    private fun mapTeamItems(){
+        _teamCardList.value = _teamList.value!!.map { it.toTeamCard() }
+        _teamItemList.value = _teamList.value!!.map { it.toTeamItem() }
+    }
+
+    fun getTeamCard(id: Int): TeamCard?{
+        return _teamCardList.value?.find { it.teamId == id }
     }
 
 
