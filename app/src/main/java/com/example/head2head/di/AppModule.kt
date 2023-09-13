@@ -4,6 +4,10 @@ import androidx.room.Room
 import com.example.head2head.data.local.AppDatabase
 import com.example.head2head.data.local.TeamLocalDataSourceImp
 import com.example.head2head.data.remote.FootballAPI
+import com.example.head2head.data.remote.H2HRemoteDataSourceImpl
+import com.example.head2head.domain.H2HRemoteDataSource
+import com.example.head2head.domain.H2HRepository
+import com.example.head2head.domain.H2HRepositoryImpl
 import com.example.head2head.domain.TeamLocalDataSource
 import com.example.head2head.view.viewmodels.H2HViewModel
 import com.example.head2head.view.viewmodels.TeamViewModel
@@ -79,13 +83,13 @@ val databaseModule = module{
     }
 }
 
-val localModule = module{
+val localTeamModule = module{
     single<TeamLocalDataSource> {
         TeamLocalDataSourceImp(get())
     }
 }
 
-val remoteModule = module{
+val remoteTeamModule = module{
 
 }
 
@@ -101,10 +105,22 @@ val teamViewModel = module{
 val h2hViewModel = module{
     viewModel{
         H2HViewModel(
-            get(), get()
+            get()
         )
     }
 }
 
-val repositoryModule = module{}
+val teamRepositoryModule = module{}
+
+val h2hRepositoryModule = module{
+    single<H2HRepository> {
+        H2HRepositoryImpl(get())
+    }
+}
+
+val remoteH2HModule = module{
+    single<H2HRemoteDataSource>{
+        H2HRemoteDataSourceImpl(get())
+    }
+}
 /*TODO: Modulo do Repository*/

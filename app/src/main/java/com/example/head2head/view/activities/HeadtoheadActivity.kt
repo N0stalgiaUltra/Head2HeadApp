@@ -1,7 +1,6 @@
 package com.example.head2head.view.activities
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.head2head.databinding.ActivityHeadtoheadBinding
@@ -80,7 +79,7 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
     }
 
     private suspend fun getH2HData(id1: Int, id2: Int){
-        h2HViewModel.getH2HRemote(id1, id2)
+        h2HViewModel.getRemoteData(id1, id2)
     }
 
     private fun setTexts(team1: TeamCard?, team2: TeamCard?){

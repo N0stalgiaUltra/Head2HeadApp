@@ -4,56 +4,56 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.head2head.data.remote.FootballAPI
+import androidx.lifecycle.viewModelScope
 import com.example.head2head.data.remote.dto.h2h.GoalsDto
 import com.example.head2head.data.remote.dto.h2h.H2HDto
 import com.example.head2head.data.remote.response.HTHResponse
-import com.example.head2head.domain.TeamLocalDataSource
+import com.example.head2head.domain.H2HRepository
+import com.example.head2head.domain.TeamRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class H2HViewModel(
-    val api: FootballAPI,
-    val local: TeamLocalDataSource
+    private val repository: H2HRepository
 ): ViewModel() {
 
     private val _teamsH2HList = MutableLiveData<List<H2HDto>>()
     val teamsH2HList : LiveData<List<H2HDto>> get() = _teamsH2HList
 
-    private val _h2hGoals = MutableLiveData<List<GoalsDto>>()
-    val h2hGoals: LiveData<List<GoalsDto>> get() = _h2hGoals
-
-
     /* TODO: Adicionar um remote data source para o H2H*/
-    suspend fun getH2HRemote(id1: Int, id2: Int) = withContext(Dispatchers.IO){
-        val teams: String = "${id1}-${id2}"
-        val call: Call<HTHResponse> = api.getH2H(teams)
-        call.enqueue(
-            object: Callback<HTHResponse> {
-                override fun onResponse(
-                    call: Call<HTHResponse>,
-                    response: Response<HTHResponse>
-                ) {
-                    val data = response.body()
-
-                    if(data != null) {
-                        _teamsH2HList.value = data.h2hResponse
-
-                    }
-
-                    Log.d("response", "Success")
-
-                }
-
-                override fun onFailure(call: Call<HTHResponse>, t: Throwable) {
-                    Log.d("response", t.message ?: "")
-                }
-            }
-        )
+    suspend fun getRemoteData(id1: Int, id2: Int) = viewModelScope.launch{
+        _teamsH2HList.value = repository.getRemoteData(id1, id2)
     }
+//    suspend fun getRemoteData(id1: Int, id2: Int) = withContext(Dispatchers.IO){
+//        val teams: String = "${id1}-${id2}"
+//        val call: Call<HTHResponse> = api.getH2H(teams)
+//        call.enqueue(
+//            object: Callback<HTHResponse> {
+//                override fun onResponse(
+//                    call: Call<HTHResponse>,
+//                    response: Response<HTHResponse>
+//                ) {
+//                    val data = response.body()
+//
+//                    if(data != null) {
+//                        _teamsH2HList.value = data.h2hResponse
+//
+//                    }
+//
+//                    Log.d("response", "Success")
+//
+//                }
+//
+//                override fun onFailure(call: Call<HTHResponse>, t: Throwable) {
+//                    Log.d("response", t.message ?: "")
+//                }
+//            }
+//        )
+//    }
 
     /**
      * Get the count of the wins, loss, and ties from the duel
