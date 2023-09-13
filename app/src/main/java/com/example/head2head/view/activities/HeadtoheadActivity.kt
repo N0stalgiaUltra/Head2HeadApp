@@ -3,8 +3,10 @@ package com.example.head2head.view.activities
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.head2head.databinding.ActivityHeadtoheadBinding
 import com.example.head2head.domain.mapper.team.TeamCard
+import com.example.head2head.view.adapter.CardAdapter
 import com.example.head2head.view.util.ImageLoader
 import com.example.head2head.view.viewmodels.H2HViewModel
 import com.example.head2head.view.viewmodels.TeamViewModel
@@ -17,25 +19,31 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
     private lateinit var binding: ActivityHeadtoheadBinding
     private val h2HViewModel: H2HViewModel by viewModel()
     private val teamViewModel: TeamViewModel by viewModel()
+    private val cardAdapter = CardAdapter()
+
     var id1: Int = 0
     var id2: Int = 0
+    private var teamCards: List<TeamCard?> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHeadtoheadBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        id1 = intent.getIntExtra("teamId", -1)
+        id2 = intent.getIntExtra("teamId2", -1)
     }
 
     override fun onStart() {
         super.onStart()
 
-
-
         h2HViewModel.teamsH2HList.observe(this){
-            teams -> teams.map {
-                /*TODO: Organizar o ViewBinding*/
-
+            teams ->
+            if(teams.isNotEmpty()) {
+                cardAdapter.clearItems()
+                cardAdapter.setItems(teams, teamCards)
+                setupRecyclerView()
+                Log.d("RecView", "Entrei no OnStart")
+                Log.d("RecView", cardAdapter.itemCount.toString())
             }
         }
     }
@@ -43,16 +51,12 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
     override fun onResume() {
         super.onResume()
 
-        Log.d("Teams", "${teamViewModel.teamCardList.value?.size}")
-        //setTexts(team1, team2)
         teamViewModel.teamCardList.observe(this){
             items ->
             if(items != null){
-                id1 = intent.getIntExtra("teamId", -1)
-                id2 = intent.getIntExtra("teamId2", -1)
-
                 val team1 = teamViewModel.getTeamCard(id1)
                 val team2 = teamViewModel.getTeamCard(id2)
+                teamCards = listOf(team1, team2)
                 setTexts(team1, team2)
             }
         }
@@ -61,10 +65,11 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
 
             if(h2HViewModel.teamsH2HList.value != null) {
                 val test = h2HViewModel.getWinnersCount(id1)
-                Log.d("H2H", test)
             }
             else{
+                Log.d("H2H", "${id1},  ${id2}")
                 getH2HData(id1, id2)
+                Log.d("H2H", h2HViewModel.teamsH2HList.value?.size.toString())
             }
 
         }
@@ -87,4 +92,12 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
 
     }
 
+    private fun setupRecyclerView(){
+        binding.hthRecyclerView.apply {
+            layoutManager = GridLayoutManager(applicationContext, 1)
+            adapter = cardAdapter
+            Log.d("RecView", "Entrei no setup")
+
+        }
+    }
 }

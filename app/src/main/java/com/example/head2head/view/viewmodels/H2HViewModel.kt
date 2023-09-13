@@ -41,6 +41,7 @@ class H2HViewModel(
 
                     if(data != null) {
                         _teamsH2HList.value = data.h2hResponse
+                        Log.d("response", data.h2hResponse.size.toString())
 
                     }
 
