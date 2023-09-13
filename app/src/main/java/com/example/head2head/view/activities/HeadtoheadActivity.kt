@@ -46,10 +46,9 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
                 CoroutineScope(Dispatchers.IO).launch {
                     val count = h2HViewModel.getWinnersCount(id1)
 
-                    Log.d("H2H", "${count.first}, ${count.second}, ${count.third}")
                     binding.hthHeader.homeWinCount.text = count.first.toString()
                     binding.hthHeader.awayWinCount.text = count.second.toString()
-                    binding.hthHeader.tiesCount.text = "Ties count: ${count.third}"
+                    binding.hthHeader.tiesCount.text = "Ties: ${count.third}"
                 }
             }
         }
