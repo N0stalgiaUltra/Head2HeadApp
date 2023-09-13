@@ -7,5 +7,4 @@ data class FixtureDto(
 
 data class VenueDto(
     val name: String?,
-    val city: String?
 )

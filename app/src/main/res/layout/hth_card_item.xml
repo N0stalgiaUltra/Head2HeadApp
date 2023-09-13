@@ -21,6 +21,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_alignParentStart="true"
+
             android:src="@drawable/ic_launcher_background"/>
 
         <TextView
@@ -28,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/hth_card_logo"
+
             android:layout_marginTop="39dp"
             android:text="BOT"
             android:textSize="30sp"/>
@@ -37,15 +39,15 @@
             layout="@layout/hth_card_item_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
             android:layout_centerInParent="true"
-        />
+            />
 
         <ImageView
             android:id="@+id/hth_card_logo2"
             android:layout_width="50dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
+
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_launcher_background"/>
 
@@ -55,8 +57,30 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/hth_card_logo2"
             android:layout_marginTop="39dp"
+
             android:text="FLA"
             android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/hth_card_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:text="03/02/1998"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/hth_card_stadium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estadio Olimpico Nilton Santos"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="90dp"
+
+            />
 
     </RelativeLayout>
 

@@ -16,14 +16,12 @@ class CardAdapter: RecyclerView.Adapter<CardViewHolder>() {
     fun clearItems(){
         _items = emptyList()
         _teams = emptyList()
-        Log.d("RecView", "Limpei as listas")
 
     }
 
     fun setItems(items: List<H2HDto?>, teams: List<TeamCard?>){
         _items = items
         _teams = teams
-        Log.d("RecView", "setei os itens")
 
     }
 
@@ -31,7 +29,6 @@ class CardAdapter: RecyclerView.Adapter<CardViewHolder>() {
         val inflater = LayoutInflater.from(parent.context)
 
         val binding = HthCardItemBinding.inflate(inflater, parent, false)
-        Log.d("RecView", "Criei o VH")
 
         return CardViewHolder(binding)
     }
@@ -44,7 +41,6 @@ class CardAdapter: RecyclerView.Adapter<CardViewHolder>() {
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val item = _items[position]!!
         holder.bindData(item, _teams)
-        Log.d("RecView", "fazendo o bind dos dados")
 
     }
 
