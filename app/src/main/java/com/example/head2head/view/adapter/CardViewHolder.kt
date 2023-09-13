@@ -34,5 +34,32 @@ class CardViewHolder(
         cardViewBinding.hthCardStadium.text = data.fixture.venue.name
 
         //insert the score data
+        setScores(data, teams)
+    }
+
+    private fun setScores(data: H2HDto, teams: List<TeamCard?>){
+        //Verificar se o primeiro time é o home ou away
+        //recuperar valor do score
+        //colocar na view
+
+        /*
+        * 3x2 -> Bot 3 x 2 FLU
+        * 1x1 ->
+        * 0x0
+        * 0x1 ->
+        * 0x2
+        *
+        * */
+
+
+        if(teams[0]?.teamId == data.teams.home.id){
+            //time é o mandante.
+            cardViewBinding.hthCardScore.hthScoreHome.text = data.goals.home.toString()
+            cardViewBinding.hthCardScore.hthScoreAway.text = data.goals.away.toString()
+        }
+        else{
+            cardViewBinding.hthCardScore.hthScoreHome.text = data.goals.away.toString()
+            cardViewBinding.hthCardScore.hthScoreAway.text = data.goals.home.toString()
+        }
     }
 }
