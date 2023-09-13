@@ -16,7 +16,6 @@ class CardViewHolder(
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun bindData(data: H2HDto, teams: List<TeamCard?>){
-        /*TODO: Organizar times case/visitante*/
         //first team
         cardViewBinding.hthCardTeam.text = teams[0]?.teamAbvr
         getImage(cardViewBinding.root.context,
@@ -38,20 +37,6 @@ class CardViewHolder(
     }
 
     private fun setScores(data: H2HDto, teams: List<TeamCard?>){
-        //Verificar se o primeiro time é o home ou away
-        //recuperar valor do score
-        //colocar na view
-
-        /*
-        * 3x2 -> Bot 3 x 2 FLU
-        * 1x1 ->
-        * 0x0
-        * 0x1 ->
-        * 0x2
-        *
-        * */
-
-
         if(teams[0]?.teamId == data.teams.home.id){
             //time é o mandante.
             cardViewBinding.hthCardScore.hthScoreHome.text = data.goals.home.toString()

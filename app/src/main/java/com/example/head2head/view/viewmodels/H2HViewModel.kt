@@ -27,7 +27,7 @@ class H2HViewModel(
     val h2hGoals: LiveData<List<GoalsDto>> get() = _h2hGoals
 
 
-    /*TODO: Adicionar um remote data source para o H2H*/
+    /* TODO: Adicionar um remote data source para o H2H*/
     suspend fun getH2HRemote(id1: Int, id2: Int) = withContext(Dispatchers.IO){
         val teams: String = "${id1}-${id2}"
         val call: Call<HTHResponse> = api.getH2H(teams)
@@ -41,7 +41,6 @@ class H2HViewModel(
 
                     if(data != null) {
                         _teamsH2HList.value = data.h2hResponse
-                        Log.d("response", data.h2hResponse.size.toString())
 
                     }
 
@@ -56,7 +55,13 @@ class H2HViewModel(
         )
     }
 
-    suspend fun getWinnersCount(id1: Int): String = withContext(Dispatchers.IO){
+    /**
+     * Get the count of the wins, loss, and ties from the duel
+     *
+     * @param id1  Id of the first team
+     * @return returns the count of the wins, lost and ties - in that order
+     */
+    suspend fun getWinnersCount(id1: Int): Triple<Int, Int, Int> = withContext(Dispatchers.IO){
         var count1 = 0
         var count2 = 0
         var ties = 0
@@ -64,11 +69,9 @@ class H2HViewModel(
             Log.d("List", "entrei")
             if(it.teams.home.winner == null){
                 ties++
-                Log.d("List", "Empate")
             }
             else{
                 if(it.teams.home.id == id1){
-                    //Botafogo
                     if(it.teams.home.winner == true)
                     {
                         count1++
@@ -91,7 +94,7 @@ class H2HViewModel(
 
         }
 
-        return@withContext "${count1}, ${count2}, $ties"
+        return@withContext Triple(count1, count2, ties)
     }
 
 }

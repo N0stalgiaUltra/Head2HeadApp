@@ -42,8 +42,15 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
                 cardAdapter.clearItems()
                 cardAdapter.setItems(teams, teamCards)
                 setupRecyclerView()
-                Log.d("RecView", "Entrei no OnStart")
-                Log.d("RecView", cardAdapter.itemCount.toString())
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val count = h2HViewModel.getWinnersCount(id1)
+
+                    Log.d("H2H", "${count.first}, ${count.second}, ${count.third}")
+                    binding.hthHeader.homeWinCount.text = count.first.toString()
+                    binding.hthHeader.awayWinCount.text = count.second.toString()
+                    binding.hthHeader.tiesCount.text = "Ties count: ${count.third}"
+                }
             }
         }
     }
@@ -52,7 +59,7 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
         super.onResume()
 
         teamViewModel.teamCardList.observe(this){
-            items ->
+                items ->
             if(items != null){
                 val team1 = teamViewModel.getTeamCard(id1)
                 val team2 = teamViewModel.getTeamCard(id2)
@@ -63,13 +70,8 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            if(h2HViewModel.teamsH2HList.value != null) {
-                val test = h2HViewModel.getWinnersCount(id1)
-            }
-            else{
-                Log.d("H2H", "${id1},  ${id2}")
+            if(h2HViewModel.teamsH2HList.value == null){
                 getH2HData(id1, id2)
-                Log.d("H2H", h2HViewModel.teamsH2HList.value?.size.toString())
             }
 
         }
@@ -96,8 +98,6 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
         binding.hthRecyclerView.apply {
             layoutManager = GridLayoutManager(applicationContext, 1)
             adapter = cardAdapter
-            Log.d("RecView", "Entrei no setup")
-
         }
     }
 }
