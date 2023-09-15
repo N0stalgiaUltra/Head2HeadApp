@@ -74,7 +74,7 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
 
         }
 
-        teamViewModel.getTeamsLocal()
+        //teamViewModel.getTeamsLocal()
 
     }
 

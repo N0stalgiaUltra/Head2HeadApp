@@ -1,17 +1,16 @@
 package com.example.head2head.view.viewmodels
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.data.remote.response.TeamResponse
-import com.example.head2head.domain.TeamLocalDataSource
+import com.example.head2head.domain.team.TeamLocalDataSource
 import com.example.head2head.domain.mapper.team.TeamCard
 import com.example.head2head.domain.mapper.team.TeamItem
+import com.example.head2head.domain.team.TeamRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,8 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TeamViewModel(
-    val api: FootballAPI,
-    val local: TeamLocalDataSource
+    private val repository: TeamRepository
 ): ViewModel() {
 
     private val _teamList = MutableLiveData<List<TeamLocal>?>()
@@ -36,49 +34,28 @@ class TeamViewModel(
 
 
     /*TODO: Recuperar os dados de H2H*/
-    fun getTeamsLocal(){
+//    fun getTeamsLocal(){
+//        repository.getLocalTeams().observeForever{
+//                localData ->
+//                    if(localData.isNullOrEmpty()){
+//                        CoroutineScope(Dispatchers.IO).launch {
+//                            Log.d("local", "Empty List, Trying API")
+//                            repository.getRemoteTeams()
+//                        }
+//                    }
+//                    else{
+//                        _teamList.value = localData
+//                        mapTeamItems()
+//                        Log.d("Local", "Success")
+//                    }
+//
+//        }
+//    }
 
-        local.getTeam().observeForever{
-            localData ->
-            if(localData.isNullOrEmpty()){
-                CoroutineScope(Dispatchers.IO).launch {
-                    Log.d("local", "Empty List, Trying API")
-                    getTeamsRemote()
-                }
-            }
-            else{
-                _teamList.value = localData
-                mapTeamItems()
-                Log.d("Local", "Success")
-                Log.d("local", "${_teamList.value!!.size}")
-            }
-
+    fun getTeamsRemote(){
+        CoroutineScope(Dispatchers.IO).launch {
+            _teamList.value = repository.getRemoteTeams()
         }
-    }
-    suspend fun getTeamsRemote() = withContext(Dispatchers.IO){
-        val call: Call<TeamResponse> = api.getTeams()
-        call.enqueue(
-            object: Callback<TeamResponse>{
-                override fun onResponse(
-                    call: Call<TeamResponse>,
-                    response: Response<TeamResponse>
-                ) {
-                    val team = response.body()
-                    if(team != null) {
-                        local.insert(team.teamResponse.map { it.team })
-                        _teamList.value = local.getTeam().value
-                        mapTeamItems()
-                    }
-                    Log.d("response", "Success")
-
-                }
-
-                override fun onFailure(call: Call<TeamResponse>, t: Throwable) {
-                    Log.d("response", t.message ?: "")
-                    /*TODO: Organizar tratamento de erros*/
-                }
-            }
-        )
     }
 
 

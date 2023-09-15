@@ -5,10 +5,14 @@ import com.example.head2head.data.local.AppDatabase
 import com.example.head2head.data.local.TeamLocalDataSourceImp
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.data.remote.H2HRemoteDataSourceImpl
-import com.example.head2head.domain.H2HRemoteDataSource
-import com.example.head2head.domain.H2HRepository
-import com.example.head2head.domain.H2HRepositoryImpl
-import com.example.head2head.domain.TeamLocalDataSource
+import com.example.head2head.domain.h2h.H2HRemoteDataSource
+import com.example.head2head.domain.h2h.H2HRepository
+import com.example.head2head.data.remote.H2HRepositoryImpl
+import com.example.head2head.data.remote.TeamRemoteDataSourceImpl
+import com.example.head2head.domain.team.TeamLocalDataSource
+import com.example.head2head.domain.team.TeamRemoteDataSource
+import com.example.head2head.domain.team.TeamRepository
+import com.example.head2head.domain.team.TeamRepositoryImpl
 import com.example.head2head.view.viewmodels.H2HViewModel
 import com.example.head2head.view.viewmodels.TeamViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -90,13 +94,32 @@ val localTeamModule = module{
 }
 
 val remoteTeamModule = module{
+    single<TeamRemoteDataSource>{
+        TeamRemoteDataSourceImpl(get())
+    }
+}
 
+val remoteH2HModule = module{
+    single<H2HRemoteDataSource>{
+        H2HRemoteDataSourceImpl(get())
+    }
+}
+
+val teamRepositoryModule = module{
+    single<TeamRepository>{
+        TeamRepositoryImpl(get(), get())
+    }
+}
+
+val h2hRepositoryModule = module{
+    single<H2HRepository> {
+        H2HRepositoryImpl(get())
+    }
 }
 
 val teamViewModel = module{
     viewModel {
         TeamViewModel(
-            get(),
             get()
         )
     }
@@ -109,18 +132,3 @@ val h2hViewModel = module{
         )
     }
 }
-
-val teamRepositoryModule = module{}
-
-val h2hRepositoryModule = module{
-    single<H2HRepository> {
-        H2HRepositoryImpl(get())
-    }
-}
-
-val remoteH2HModule = module{
-    single<H2HRemoteDataSource>{
-        H2HRemoteDataSourceImpl(get())
-    }
-}
-/*TODO: Modulo do Repository*/

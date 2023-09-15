@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity(), ImageLoader {
             val result = compareId()
 
             if(!result){
-                /*TODO: CHAMAR ACTIVITY DO H2H, PASSANDO DADOS PELO Intent*/
-                //Toast.makeText(this, "IDs Accepted, call new activity", Toast.LENGTH_SHORT).show()
                 val intent = Intent(applicationContext, HeadtoheadActivity::class.java)
                 intent.putExtra("teamId", id1.toInt())
                 intent.putExtra("teamId2", id2.toInt())
@@ -62,7 +60,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
             }
         })
 
-        getTeams()
+        //getTeams()
 
     }
 
@@ -105,7 +103,8 @@ class MainActivity : AppCompatActivity(), ImageLoader {
     }
 
     private fun getTeams(){
-        mainViewModel.getTeamsLocal()
+        //mainViewModel.getTeamsLocal()
+        mainViewModel.getTeamsRemote()
     }
 
     private fun compareId(): Boolean{

@@ -1,4 +1,4 @@
-package com.example.head2head.domain
+package com.example.head2head.domain.h2h
 
 import com.example.head2head.data.remote.dto.h2h.H2HDto
 
