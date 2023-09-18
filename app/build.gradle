@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.head2head'
+    namespace 'com.n0stalgiaultra.head2head'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.head2head"
+        applicationId "com.n0stalgiaultra.head2head"
         minSdk 24
         targetSdk 33
         versionCode 1
