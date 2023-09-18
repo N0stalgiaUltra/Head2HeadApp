@@ -23,7 +23,7 @@ Head 2 Head App is a native Android App made with Kotlin. The app is capable of 
 <p float="left" align="center">
   <img alt="screenshot" width="30%" src="screenshots/img01.png"/>
   <img alt="screenshot" width="30%" src="screenshots/img02.png"/>
-  <img alt="screenshot" width="30%" src="screenshots/img03.png"/>
+  <img alt="screenshot" width="30%" src="screenshots/img_03.png"/>
 </p>
 
 ## Download
@@ -58,6 +58,10 @@ Currently, the app is in Closed Test in the Play Store. Soon will be deployed to
 ## Architecture
 **Head2HeadApp** was built using MVVM, Clean Architecture and the Repository pattern. Following [Google´s official recomendation](https://developer.android.com/topic/architecture)
 </br>
+
+## Third Party APIs
+
+[API Sports](https://dashboard.api-football.com/), this API provides all kind of data related to sports and series and it have a limited usage for free accounts.
 
 ## Features
 
