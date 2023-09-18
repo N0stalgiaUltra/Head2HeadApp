@@ -14,12 +14,10 @@
         android:layout_height="75dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-
-        app:layout_constraintBottom_toTopOf="@id/teamSpinner2"
+        android:layout_marginTop="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".1"
 
         android:background="@drawable/spinner_background"
         android:spinnerMode="dropdown"
@@ -44,10 +42,14 @@
 
 
         android:spinnerMode="dropdown"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teamSpinner1" />
+        app:layout_constraintTop_toBottomOf="@id/teamSpinner1"
+        app:layout_constraintVertical_bias="0.395" />
 
     <Button
         android:id="@+id/buttonH2H"
