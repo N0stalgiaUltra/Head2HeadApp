@@ -3,11 +3,6 @@ package com.example.head2head.domain.team
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.head2head.data.local.model.TeamLocal
-import com.example.head2head.data.remote.FootballAPI
-import com.example.head2head.data.remote.dto.TeamDto
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class TeamRepositoryImpl(val remote: TeamRemoteDataSource,
                          val local: TeamLocalDataSource): TeamRepository {
@@ -16,11 +11,15 @@ class TeamRepositoryImpl(val remote: TeamRemoteDataSource,
         return local.getTeam()
     }
 
-    override suspend fun getRemoteTeams(): List<TeamLocal> {
-        CoroutineScope(Dispatchers.IO).launch{
-             val obj = remote.getRemoteTeams()
-             local.insert(obj)
+    override suspend fun getRemoteTeams(): LiveData<List<TeamLocal>> {
+        //val teams : List<TeamLocal>
+        try {
+            val response = remote.getRemoteTeams()
+            local.insert(response)
+        } catch (e: Exception){
+            Log.e("Remote Teams", "Error ${e.message}", e)
         }
-        return local.getTeam().value!!
+        return local.getTeam()
+
     }
 }

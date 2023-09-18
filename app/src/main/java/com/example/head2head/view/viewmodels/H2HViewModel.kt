@@ -33,7 +33,6 @@ class H2HViewModel(
         var count2 = 0
         var ties = 0
         _teamsH2HList.value?.map{
-            Log.d("List", "entrei")
             if(it.teams.home.winner == null){
                 ties++
             }

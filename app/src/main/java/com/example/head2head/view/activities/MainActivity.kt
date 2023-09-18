@@ -14,6 +14,9 @@ import com.example.head2head.domain.mapper.team.TeamItem
 import com.example.head2head.view.dropdown.CustomDropdownItem
 import com.example.head2head.view.util.ImageLoader
 import com.example.head2head.view.viewmodels.TeamViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.reflect.KMutableProperty0
 
@@ -27,10 +30,12 @@ class MainActivity : AppCompatActivity(), ImageLoader {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
     }
 
     override fun onStart() {
         super.onStart()
+
         binding.buttonH2H.setOnClickListener {
             val result = compareId()
 
@@ -39,10 +44,11 @@ class MainActivity : AppCompatActivity(), ImageLoader {
                 intent.putExtra("teamId", id1.toInt())
                 intent.putExtra("teamId2", id2.toInt())
                 startActivity(intent)
-
             }
             else{
-                Toast.makeText(this, "You must choose different teams", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    "You must choose different teams",
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -60,8 +66,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
             }
         })
 
-        //getTeams()
-
+        getTeams()
     }
 
     override fun onDestroy() {
@@ -103,8 +108,7 @@ class MainActivity : AppCompatActivity(), ImageLoader {
     }
 
     private fun getTeams(){
-        //mainViewModel.getTeamsLocal()
-        mainViewModel.getTeamsRemote()
+        mainViewModel.getTeamsLocal()
     }
 
     private fun compareId(): Boolean{

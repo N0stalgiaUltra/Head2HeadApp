@@ -1,12 +1,15 @@
 package com.example.head2head.view.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.head2head.data.local.model.TeamLocal
 import com.example.head2head.data.remote.FootballAPI
 import com.example.head2head.data.remote.response.TeamResponse
+import com.example.head2head.di.localTeamModule
 import com.example.head2head.domain.team.TeamLocalDataSource
 import com.example.head2head.domain.mapper.team.TeamCard
 import com.example.head2head.domain.mapper.team.TeamItem
@@ -33,31 +36,24 @@ class TeamViewModel(
     val teamItemList: LiveData<List<TeamItem>> get() = _teamItemList
 
 
-    /*TODO: Recuperar os dados de H2H*/
-//    fun getTeamsLocal(){
-//        repository.getLocalTeams().observeForever{
-//                localData ->
-//                    if(localData.isNullOrEmpty()){
-//                        CoroutineScope(Dispatchers.IO).launch {
-//                            Log.d("local", "Empty List, Trying API")
-//                            repository.getRemoteTeams()
-//                        }
-//                    }
-//                    else{
-//                        _teamList.value = localData
-//                        mapTeamItems()
-//                        Log.d("Local", "Success")
-//                    }
-//
-//        }
-//    }
 
-    fun getTeamsRemote(){
-        CoroutineScope(Dispatchers.IO).launch {
-            _teamList.value = repository.getRemoteTeams()
+    fun getTeamsLocal(){
+        repository.getLocalTeams().observeForever{
+                localData ->
+                    if(localData.isNullOrEmpty()){
+                        CoroutineScope(Dispatchers.IO).launch {
+                            Log.d("local", "Empty List, Trying API")
+                            repository.getRemoteTeams()
+                        }
+                    }
+                    else{
+                        _teamList.value = localData
+                        mapTeamItems()
+                        Log.d("Local", "Success")
+                    }
+
         }
     }
-
 
     private fun mapTeamItems(){
         _teamCardList.value = _teamList.value!!.map { it.toTeamCard() }
@@ -65,7 +61,8 @@ class TeamViewModel(
     }
 
     fun getTeamCard(id: Int): TeamCard?{
-        return _teamCardList.value?.find { it.teamId == id }
+        val team = _teamCardList.value?.find { it.teamId == id }
+        return team
     }
 
 

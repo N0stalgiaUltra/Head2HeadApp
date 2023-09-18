@@ -1,8 +1,10 @@
 package com.example.head2head.view.adapter
 
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.head2head.data.remote.dto.h2h.H2HDto
 import com.example.head2head.databinding.HthCardItemBinding
@@ -22,7 +24,6 @@ class CardAdapter: RecyclerView.Adapter<CardViewHolder>() {
     fun setItems(items: List<H2HDto?>, teams: List<TeamCard?>){
         _items = items
         _teams = teams
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -38,6 +39,7 @@ class CardAdapter: RecyclerView.Adapter<CardViewHolder>() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val item = _items[position]!!
         holder.bindData(item, _teams)
