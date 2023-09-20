@@ -4,7 +4,7 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="@color/green"/>
+                    <solid android:color="?attr/colorSecondary"/>
                     <corners android:radius="5dp"/>
                     <padding
                         android:bottom="10dp"
@@ -14,7 +14,7 @@
                         />
                     <stroke
                         android:width="2dp"
-                        android:color="@color/yellow"
+                        android:color="?attr/colorTertiary"
                         />
                 </shape>
             </item>

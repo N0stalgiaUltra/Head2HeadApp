@@ -1,12 +1,15 @@
 package com.n0stalgiaultra.head2head.view.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import com.n0stalgiaultra.head2head.databinding.ActivityMainBinding
 import com.n0stalgiaultra.head2head.domain.mapper.team.TeamItem
@@ -17,21 +20,23 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.reflect.KMutableProperty0
 
 class MainActivity : AppCompatActivity(), ImageLoader {
-
     private val mainViewModel: TeamViewModel by viewModel()
     private lateinit var  binding: ActivityMainBinding
+    private lateinit var sharedPreferences: SharedPreferences
     private var id1: Long = 0
     private var id2: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedPreferences = getSharedPreferences("theme", Context.MODE_PRIVATE)
 
     }
 
     override fun onStart() {
         super.onStart()
-
+        binding.themeSwitch.isChecked = sharedPreferences.getBoolean("theme_state", false)
+        setTheme(binding.themeSwitch.isChecked)
         binding.buttonH2H.setOnClickListener {
             val result = compareId()
 
@@ -46,6 +51,12 @@ class MainActivity : AppCompatActivity(), ImageLoader {
                     "You must choose different teams",
                     Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.themeSwitch.setOnCheckedChangeListener {
+               _, checked ->
+                setTheme(checked)
+                saveData(checked)
         }
     }
     override fun onResume() {
@@ -117,4 +128,18 @@ class MainActivity : AppCompatActivity(), ImageLoader {
         return id1 == id2
     }
 
+    private fun saveData(theme: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("theme_state", theme)
+        editor.apply()
+    }
+    private fun setTheme(dark: Boolean){
+        if(dark){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        else
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
 }

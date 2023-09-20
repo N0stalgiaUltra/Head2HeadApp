@@ -4,4 +4,14 @@
     <style name="SpinnerDropdownStyle">
         <item name="android:layout_height"> 200dp </item>
     </style>
+    
+    <style name="themeSwitch">
+        <item name="android:thumbTint">@color/dark_blue</item>
+        <!-- Cor do polegar (botão) quando desativado -->
+        <item name="android:thumbTintMode">multiply</item>
+        <!-- Cor da trilha quando ativado -->
+        <item name="android:trackTint">@color/yellow</item>
+        <!-- Cor da trilha quando desativado -->
+        <item name="android:trackTintMode">multiply</item>
+    </style>
 </resources>

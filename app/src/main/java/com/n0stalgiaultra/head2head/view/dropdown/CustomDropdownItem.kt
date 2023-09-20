@@ -1,6 +1,7 @@
 package com.n0stalgiaultra.head2head.view.dropdown
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import com.n0stalgiaultra.head2head.R
 import com.n0stalgiaultra.head2head.domain.mapper.team.TeamItem
 import com.n0stalgiaultra.head2head.view.util.ImageLoader
+
 
 class CustomDropdownItem(
     private val context: Context,
@@ -56,7 +58,6 @@ class CustomDropdownItem(
 
             newViewHolder.teamIcon = itemView.findViewById(R.id.viewTeamLogo)
             newViewHolder.teamName = itemView.findViewById(R.id.viewTeamName)
-
             itemView.tag = newViewHolder
             newViewHolder
         } else {
