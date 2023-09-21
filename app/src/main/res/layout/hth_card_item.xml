@@ -30,8 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/hth_card_logo"
             android:layout_centerVertical="true"
+
             android:text="BOT"
-            android:textSize="@dimen/_25sdp"/>
+            android:textSize="@dimen/_20sdp"/>
 
         <include
             android:id="@+id/hth_card_score"
@@ -57,7 +58,7 @@
             android:layout_centerVertical="true"
 
             android:text="FLA"
-            android:textSize="@dimen/_25sdp"/>
+            android:textSize="@dimen/_20sdp"/>
 
         <TextView
             android:id="@+id/hth_card_date"
