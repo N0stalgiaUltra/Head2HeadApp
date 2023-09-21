@@ -47,20 +47,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="30"
-            android:textSize="50sp"/>
+            android:textSize="@dimen/_35sdp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="x"
-            android:textSize="50sp"/>
+            android:text=" x "
+            android:textSize="@dimen/_30sdp"/>
 
         <TextView
             android:id="@+id/away_win_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="30"
-            android:textSize="50sp"/>
+            android:textSize="@dimen/_35sdp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -78,8 +78,8 @@
             android:id="@+id/ties_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ties: 55"
-            android:textSize="30sp"
+            android:text="@string/ties"
+            android:textSize="@dimen/_20sdp"
             />
 
     </LinearLayout>

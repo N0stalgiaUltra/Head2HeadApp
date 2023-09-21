@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.n0stalgiaultra.head2head.R
 import com.n0stalgiaultra.head2head.databinding.ActivityHeadtoheadBinding
 import com.n0stalgiaultra.head2head.domain.mapper.team.TeamCard
 import com.n0stalgiaultra.head2head.view.adapter.CardAdapter
@@ -52,7 +53,10 @@ class HeadtoheadActivity : AppCompatActivity(), ImageLoader {
 
                         binding.hthHeader.homeWinCount.text = count.first.toString()
                         binding.hthHeader.awayWinCount.text = count.second.toString()
-                        binding.hthHeader.tiesCount.text = "Ties: ${count.third}"
+                        binding.hthHeader.tiesCount.text = binding.root.context.getString(
+                            R.string.ties,
+                            count.third
+                        )
                     }
                 }
         }

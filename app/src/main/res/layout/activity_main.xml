@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
         android:backgroundTint="?attr/colorSecondary"
-        android:text="Check Head to Head"
+        android:text="@string/check_head_to_head"
         android:textColor="?attr/colorPrimary"
         />
 
@@ -74,7 +74,7 @@
         android:layout_marginEnd="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Theme"
+        android:text="@string/theme"
         android:textColor="?attr/colorSecondary"
         />
     <androidx.appcompat.widget.SwitchCompat

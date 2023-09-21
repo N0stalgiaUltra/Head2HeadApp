@@ -46,4 +46,7 @@
     <string name="spinner_placeholder">Select the team</string>
     <string name="club_icon">Club icon</string>
     <string name="title_activity_headtohead">HeadtoheadActivity</string>
+    <string name="check_head_to_head">Check Head to Head</string>
+    <string name="theme">Theme</string>
+    <string name="ties">Ties: %d</string>
 </resources>
