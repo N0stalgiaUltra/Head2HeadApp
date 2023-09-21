@@ -1,3 +1,5 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_size_small">20sp</dimen> <!-- Tamanho de texto para telas pequenas -->
+    <dimen name="text_size_normal">30sp</dimen> <!-- Tamanho de texto padrão -->
+    <dimen name="text_size_large">40sp</dimen> <!-- Tamanho de texto para telas grandes -->
 </resources>

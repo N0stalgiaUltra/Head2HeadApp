@@ -29,18 +29,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/hth_card_logo"
-
-            android:layout_marginTop="39dp"
+            android:layout_centerVertical="true"
             android:text="BOT"
-            android:textSize="30sp"/>
+            android:textSize="@dimen/_25sdp"/>
 
         <include
             android:id="@+id/hth_card_score"
             layout="@layout/hth_card_item_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            />
+            android:layout_centerInParent="true" />
 
         <ImageView
             android:id="@+id/hth_card_logo2"
@@ -56,10 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/hth_card_logo2"
-            android:layout_marginTop="39dp"
+            android:layout_centerVertical="true"
 
             android:text="FLA"
-            android:textSize="30sp"/>
+            android:textSize="@dimen/_25sdp"/>
 
         <TextView
             android:id="@+id/hth_card_date"
