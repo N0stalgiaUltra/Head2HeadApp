@@ -27,9 +27,7 @@ Head 2 Head App is a native Android App made with Kotlin. The app is capable of 
 </p>
 
 ## Download
-
-Currently, the app is in Closed Test in the Play Store. Soon will be deployed to production.
-<!--Download the <a href="https://github.com/N0stalgiaUltra/NotesApp/tree/main/apk">APK</a> directly from this repo. You can check out <a href="https://www.google.com/search?q=how+to+install+apk+in+android">here</a> how to install an APK to your Android device. -->
+<a href='https://play.google.com/store/apps/details?id=com.n0stalgiaultra.head2head'><img alt='Disponível no Google Play' width="30%" src='https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png'/></a>
 
 ## Tech Stack
 
